@@ -94,6 +94,7 @@ func (r *reporter) send() error {
 				},
 				Time: now,
 			})
+			m.Clear()
 		case metrics.Gauge:
 			pts = append(pts, client.Point{
 				Measurement: fmt.Sprintf("%s_gauge", name),
