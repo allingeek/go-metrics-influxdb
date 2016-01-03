@@ -88,7 +88,7 @@ func (r *reporter) send() error {
 		switch m := i.(type) {
 		case metrics.Counter:
 			pts = append(pts, client.Point{
-				Measurement: fmt.Sprintf("%s.count", name),
+				Measurement: fmt.Sprintf("%s_count", name),
 				Fields: map[string]interface{}{
 					"value": m.Count(),
 				},
@@ -96,7 +96,7 @@ func (r *reporter) send() error {
 			})
 		case metrics.Gauge:
 			pts = append(pts, client.Point{
-				Measurement: fmt.Sprintf("%s.gauge", name),
+				Measurement: fmt.Sprintf("%s_gauge", name),
 				Fields: map[string]interface{}{
 					"value": m.Value(),
 				},
@@ -104,7 +104,7 @@ func (r *reporter) send() error {
 			})
 		case metrics.GaugeFloat64:
 			pts = append(pts, client.Point{
-				Measurement: fmt.Sprintf("%s.gauge", name),
+				Measurement: fmt.Sprintf("%s_gauge", name),
 				Fields: map[string]interface{}{
 					"value": m.Value(),
 				},
@@ -113,7 +113,7 @@ func (r *reporter) send() error {
 		case metrics.Histogram:
 			ps := m.Percentiles([]float64{0.5, 0.75, 0.95, 0.99, 0.999, 0.9999})
 			pts = append(pts, client.Point{
-				Measurement: fmt.Sprintf("%s.histogram", name),
+				Measurement: fmt.Sprintf("%s_histogram", name),
 				Fields: map[string]interface{}{
 					"count":    m.Count(),
 					"max":      m.Max(),
@@ -132,7 +132,7 @@ func (r *reporter) send() error {
 			})
 		case metrics.Meter:
 			pts = append(pts, client.Point{
-				Measurement: fmt.Sprintf("%s.meter", name),
+				Measurement: fmt.Sprintf("%s_meter", name),
 				Fields: map[string]interface{}{
 					"count": m.Count(),
 					"m1":    m.Rate1(),
@@ -145,7 +145,7 @@ func (r *reporter) send() error {
 		case metrics.Timer:
 			ps := m.Percentiles([]float64{0.5, 0.75, 0.95, 0.99, 0.999, 0.9999})
 			pts = append(pts, client.Point{
-				Measurement: fmt.Sprintf("%s.timer", name),
+				Measurement: fmt.Sprintf("%s_timer", name),
 				Fields: map[string]interface{}{
 					"count":    m.Count(),
 					"max":      m.Max(),
